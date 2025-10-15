@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["Tracer Contributors"]
 description = "Lightweight issue tracker for AI agents"
 license = "MIT"
-repository = "https://github.com/Abil-Shrestha/trace"
+repository = "https://github.com/Abil-Shrestha/tracer"
 
 [[bin]]
 name = "tracer"

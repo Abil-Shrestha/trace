@@ -11,8 +11,8 @@ Be respectful, constructive, and collaborative. We're all here to make Trace bet
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/Abil-Shrestha/trace.git
-   cd trace
+git clone https://github.com/Abil-Shrestha/tracer.git
+cd tracer
    ```
 3. **Build the project**:
    ```bash

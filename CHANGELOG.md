@@ -51,5 +51,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ready work query: ~10ms
 - Dependency tree: ~25ms
 
-[Unreleased]: https://github.com/Abil-Shrestha/trace/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Abil-Shrestha/tracer/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/Abil-Shrestha/trace/releases/tag/v0.1.0

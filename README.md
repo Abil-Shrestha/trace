@@ -22,7 +22,7 @@ Imagine you're working on a project with multiple tasks, some blocking others. *
 ## 🚀 Quick Install
 
 ```bash
-cargo install --git https://github.com/Abil-Shrestha/trace
+cargo install --git https://github.com/Abil-Shrestha/tracer
 ```
 
 **Prerequisites:** [Rust toolchain](https://rustup.rs/) (installs in ~30 seconds)
@@ -163,8 +163,8 @@ _Benchmarks on M1 MacBook Pro with 10,000 issues_
 
 ```bash
 # From source
-git clone https://github.com/Abil-Shrestha/trace.git
-cd trace
+git clone https://github.com/Abil-Shrestha/tracer.git
+cd tracer
 cargo install --path .
 
 # Verify installation
@@ -192,4 +192,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**[⭐ Star on GitHub](https://github.com/Abil-Shrestha/trace)** • **[Report Issues](https://github.com/Abil-Shrestha/trace/issues)** • Built with Rust 🦀
+**[⭐ Star on GitHub](https://github.com/Abil-Shrestha/tracer)** • **[Report Issues](https://github.com/Abil-Shrestha/tracer/issues)** • Built with Rust 🦀
