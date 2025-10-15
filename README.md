@@ -31,36 +31,19 @@ cargo install --git https://github.com/Abil-Shrestha/tracer
 
 **💡 Tip:** Use `tr` as a shorthand - both `tracer` and `tr` work identically!
 
-## ⚡ Quick Start (2 minutes)
+## ⚡ Quick Start
 
 ```bash
-# 1. Initialize (do this once per project)
+# Initialize in your project
 tracer init
 
-# 2. Create your first task
-tracer create "Build login page"
-# ✓ Created issue test-1
-
-# 3. See all your tasks
-tracer list
-# test-1  Build login page  [P2, task, open]
-
-# 4. Mark it as in progress
-tracer update test-1 --status in_progress
-
-# 5. When done, close it
-tracer close test-1 --reason "Login page complete"
-```
-
-**That's it!** You're now tracking work with Tracer. 🎉
-
-### Want to Learn More?
-
-```bash
+# Learn how to use it
 tracer learn  # Interactive tutorial showing all features
 ```
 
-**👉 [Full documentation](./QUICK_START.md) | [AI agent guide](./AGENTS.md)**
+**For AI Agents:** See **[AGENTS.md](./AGENTS.md)** for integration guide and best practices.
+
+**For Humans:** Check out the **[Full documentation](./QUICK_START.md)** for detailed examples.
 
 ## 🎯 Example Workflow (with Dependencies)
 
