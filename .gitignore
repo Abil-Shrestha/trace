@@ -1,0 +1,28 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+
+# Database files (local caches)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Keep example databases if any
+!examples/**/*.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.trace/
+
+# Coverage
+tarpaulin-report.html
+cobertura.xml

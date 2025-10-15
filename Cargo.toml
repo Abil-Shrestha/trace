@@ -1,0 +1,53 @@
+[package]
+name = "trace"
+version = "0.1.0"
+edition = "2021"
+authors = ["Trace Contributors"]
+description = "Lightweight issue tracker for AI agents"
+license = "MIT"
+repository = "https://github.com/Abil-Shrestha/trace"
+
+[[bin]]
+name = "trace"
+path = "src/main.rs"
+
+[lib]
+name = "trace"
+path = "src/lib.rs"
+
+[dependencies]
+# CLI
+clap = { version = "4.5", features = ["derive", "env"] }
+colored = "2.1"
+
+# Database
+rusqlite = { version = "0.31", features = ["bundled", "chrono"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Date/Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# File system
+walkdir = "2.4"
+
+# Utilities
+sha2 = "0.10"
+hex = "0.4"
+dirs = "5.0"
+
+[dev-dependencies]
+tempfile = "3.8"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
