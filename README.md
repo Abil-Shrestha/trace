@@ -7,6 +7,18 @@ A lightweight, dependency-aware issue tracker designed for AI coding agents. Tra
 [![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
+## 🤔 What is Tracer?
+
+Imagine you're working on a project with multiple tasks, some blocking others. **Tracer helps you:**
+
+- 📝 **Track all your tasks** in one place (no more scattered TODOs)
+- 🔗 **Link dependencies** - "Task B can't start until Task A is done"
+- ✅ **See what's ready** - Instantly find work you can start right now
+- 🤖 **Perfect for AI agents** - They can track their own work across sessions
+- 📦 **Git-friendly** - Everything stored as simple JSON, syncs via git
+
+**Real Example:** You're building a login system. You need to design the database schema first, then implement the API, then build the UI. Tracer tracks these dependencies and always shows you what's actually ready to work on.
+
 ## 🚀 Quick Install
 
 ```bash
@@ -17,31 +29,63 @@ cargo install --git https://github.com/Abil-Shrestha/trace
 
 **💡 Tip:** Use `tr` as a shorthand - both `tracer` and `tr` work identically!
 
-## ⚡ Quick Start
+## ⚡ Quick Start (2 minutes)
 
 ```bash
-# Initialize in your project
-cd ~/myproject
+# 1. Initialize (do this once per project)
 tracer init
 
-# Create issues
-tracer create "Fix authentication bug" -p 1 -t bug
-tracer create "Add login form" -p 1 -t task
+# 2. Create your first task
+tracer create "Build login page"
+# ✓ Created issue test-1
 
-# Add dependencies (task-2 blocked by task-1)
-tracer dep add test-2 test-1 --type blocks
+# 3. See all your tasks
+tracer list
+# test-1  Build login page  [P2, task, open]
 
-# See what's ready to work on
-tracer ready
-
-# Start working
+# 4. Mark it as in progress
 tracer update test-1 --status in_progress
 
-# Complete work
-tracer close test-1 --reason "Fixed and tested"
+# 5. When done, close it
+tracer close test-1 --reason "Login page complete"
+```
+
+**That's it!** You're now tracking work with Tracer. 🎉
+
+### Want to Learn More?
+
+```bash
+tracer learn  # Interactive tutorial showing all features
 ```
 
 **👉 [Full documentation](./QUICK_START.md) | [AI agent guide](./CLAUDE.md)**
+
+## 🎯 Example Workflow (with Dependencies)
+
+Once you're comfortable with basics, try managing dependencies:
+
+```bash
+# Create an epic (big feature)
+tracer create "User authentication system" -t epic
+
+# Create subtasks
+tracer create "Design database schema" -t task
+tracer create "Build login API" -t task
+tracer create "Create login UI" -t task
+
+# Link them: API depends on schema being done
+tracer dep add test-3 test-2 --type blocks
+
+# See what you can work on RIGHT NOW
+tracer ready
+# → Shows test-2 (Design database schema)
+# → Hides test-3 (blocked by test-2)
+
+# Start working on what's ready
+tracer update test-2 --status in_progress
+```
+
+**The power:** Tracer automatically figures out what's ready to work on based on your dependencies!
 
 ## Why Trace?
 
