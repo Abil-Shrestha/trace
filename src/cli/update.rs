@@ -65,7 +65,7 @@ pub fn execute_update(args: UpdateArgs, storage: &mut Box<dyn Storage>, actor: &
     storage.update_issue(&args.id, &updates, actor)?;
 
     if json {
-        let updated = storage.get_issue(&args.id)?.unwrap();
+        let updated = storage.get_issue(&args.id)?.expect("Issue should exist after update");
         println!("{}", serde_json::to_string_pretty(&updated)?);
     } else {
         use colored::Colorize;

@@ -58,7 +58,7 @@ tracer close test-1 --reason "Login page complete"
 tracer learn  # Interactive tutorial showing all features
 ```
 
-**👉 [Full documentation](./QUICK_START.md) | [AI agent guide](./CLAUDE.md)**
+**👉 [Full documentation](./QUICK_START.md) | [AI agent guide](./AGENTS.md)**
 
 ## 🎯 Example Workflow (with Dependencies)
 
@@ -87,7 +87,7 @@ tracer update test-2 --status in_progress
 
 **The power:** Tracer automatically figures out what's ready to work on based on your dependencies!
 
-## Why Trace?
+## Why Tracer?
 
 - ⚡ **Fast** - ~5ms per operation, built in Rust
 - 🤖 **AI-friendly** - JSON output, CLI-first, programmatic workflows
@@ -178,8 +178,8 @@ cargo install tracer
 ## Documentation
 
 - **[Quick Start Guide](./QUICK_START.md)** - Get started in 5 minutes
-- **[AI Agent Guide](./CLAUDE.md)** - Integration with Claude and other LLMs
-- **[Contributing](./CONTRIBUTING.md)** - Help improve Trace
+- **[AI Agent Guide](./AGENTS.md)** - Integration with Claude, GPT, and other LLMs
+- **[Contributing](./CONTRIBUTING.md)** - Help improve Tracer
 - **[Installation](./INSTALL.md)** - Detailed installation instructions
 
 ## Contributing

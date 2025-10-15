@@ -40,11 +40,7 @@ fn main() -> Result<()> {
     // Auto-import if JSONL is newer
     let jsonl_path = find_jsonl_path(&db_path);
     if jsonl_path.exists() {
-        if let Ok(imported) = cli::export::auto_import(&mut storage, &jsonl_path, &actor) {
-            if imported && std::env::var("TRACE_DEBUG").is_ok() {
-                eprintln!("Debug: Auto-imported from {}", jsonl_path.display());
-            }
-        }
+        let _ = cli::export::auto_import(&mut storage, &jsonl_path, &actor);
     }
 
     // Execute command
@@ -119,10 +115,6 @@ fn main() -> Result<()> {
             } else {
                 // Clear dirty flags after successful export
                 storage.clear_dirty_issues()?;
-                
-                if std::env::var("TRACE_DEBUG").is_ok() {
-                    eprintln!("Debug: Auto-exported {} issues to {}", dirty.len(), jsonl_path.display());
-                }
             }
         }
     }

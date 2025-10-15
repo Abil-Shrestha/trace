@@ -202,9 +202,9 @@ impl Storage for SqliteStorage {
                         design: row.get(3)?,
                         acceptance_criteria: row.get(4)?,
                         notes: row.get(5)?,
-                        status: row.get::<_, String>(6)?.parse().unwrap(),
+                        status: row.get::<_, String>(6)?.parse().expect("Invalid status in database"),
                         priority: row.get(7)?,
-                        issue_type: row.get::<_, String>(8)?.parse().unwrap(),
+                        issue_type: row.get::<_, String>(8)?.parse().expect("Invalid issue type in database"),
                         assignee: row.get::<_, Option<String>>(9)?.unwrap_or_default(),
                         estimated_minutes: row.get(10)?,
                         created_at: row.get(11)?,
@@ -353,9 +353,9 @@ impl Storage for SqliteStorage {
                 design: row.get(3)?,
                 acceptance_criteria: row.get(4)?,
                 notes: row.get(5)?,
-                status: row.get::<_, String>(6)?.parse().unwrap(),
+                status: row.get::<_, String>(6)?.parse().expect("Invalid enum value in database"),
                 priority: row.get(7)?,
-                issue_type: row.get::<_, String>(8)?.parse().unwrap(),
+                issue_type: row.get::<_, String>(8)?.parse().expect("Invalid enum value in database"),
                 assignee: row.get::<_, Option<String>>(9)?.unwrap_or_default(),
                 estimated_minutes: row.get(10)?,
                 created_at: row.get(11)?,
@@ -413,9 +413,9 @@ impl Storage for SqliteStorage {
                 design: row.get(3)?,
                 acceptance_criteria: row.get(4)?,
                 notes: row.get(5)?,
-                status: row.get::<_, String>(6)?.parse().unwrap(),
+                status: row.get::<_, String>(6)?.parse().expect("Invalid enum value in database"),
                 priority: row.get(7)?,
-                issue_type: row.get::<_, String>(8)?.parse().unwrap(),
+                issue_type: row.get::<_, String>(8)?.parse().expect("Invalid enum value in database"),
                 assignee: row.get::<_, Option<String>>(9)?.unwrap_or_default(),
                 estimated_minutes: row.get(10)?,
                 created_at: row.get(11)?,
@@ -446,9 +446,9 @@ impl Storage for SqliteStorage {
                 design: row.get(3)?,
                 acceptance_criteria: row.get(4)?,
                 notes: row.get(5)?,
-                status: row.get::<_, String>(6)?.parse().unwrap(),
+                status: row.get::<_, String>(6)?.parse().expect("Invalid enum value in database"),
                 priority: row.get(7)?,
-                issue_type: row.get::<_, String>(8)?.parse().unwrap(),
+                issue_type: row.get::<_, String>(8)?.parse().expect("Invalid enum value in database"),
                 assignee: row.get::<_, Option<String>>(9)?.unwrap_or_default(),
                 estimated_minutes: row.get(10)?,
                 created_at: row.get(11)?,
@@ -473,7 +473,7 @@ impl Storage for SqliteStorage {
             Ok(Dependency {
                 issue_id: row.get(0)?,
                 depends_on_id: row.get(1)?,
-                dep_type: row.get::<_, String>(2)?.parse().unwrap(),
+                dep_type: row.get::<_, String>(2)?.parse().expect("Invalid enum value in database"),
                 created_at: row.get(3)?,
                 created_by: row.get(4)?,
             })
@@ -492,7 +492,7 @@ impl Storage for SqliteStorage {
             Ok(Dependency {
                 issue_id: row.get(0)?,
                 depends_on_id: row.get(1)?,
-                dep_type: row.get::<_, String>(2)?.parse().unwrap(),
+                dep_type: row.get::<_, String>(2)?.parse().expect("Invalid enum value in database"),
                 created_at: row.get(3)?,
                 created_by: row.get(4)?,
             })
@@ -574,9 +574,9 @@ impl Storage for SqliteStorage {
                 design: row.get(3)?,
                 acceptance_criteria: row.get(4)?,
                 notes: row.get(5)?,
-                status: row.get::<_, String>(6)?.parse().unwrap(),
+                status: row.get::<_, String>(6)?.parse().expect("Invalid enum value in database"),
                 priority: row.get(7)?,
-                issue_type: row.get::<_, String>(8)?.parse().unwrap(),
+                issue_type: row.get::<_, String>(8)?.parse().expect("Invalid enum value in database"),
                 assignee: row.get::<_, Option<String>>(9)?.unwrap_or_default(),
                 estimated_minutes: row.get(10)?,
                 created_at: row.get(11)?,
@@ -631,9 +631,9 @@ impl Storage for SqliteStorage {
                 design: row.get(3)?,
                 acceptance_criteria: row.get(4)?,
                 notes: row.get(5)?,
-                status: row.get::<_, String>(6)?.parse().unwrap(),
+                status: row.get::<_, String>(6)?.parse().expect("Invalid enum value in database"),
                 priority: row.get(7)?,
-                issue_type: row.get::<_, String>(8)?.parse().unwrap(),
+                issue_type: row.get::<_, String>(8)?.parse().expect("Invalid enum value in database"),
                 assignee: row.get::<_, Option<String>>(9)?.unwrap_or_default(),
                 estimated_minutes: row.get(10)?,
                 created_at: row.get(11)?,
@@ -667,9 +667,9 @@ impl Storage for SqliteStorage {
                 design: row.get(3)?,
                 acceptance_criteria: row.get(4)?,
                 notes: row.get(5)?,
-                status: row.get::<_, String>(6)?.parse().unwrap(),
+                status: row.get::<_, String>(6)?.parse().expect("Invalid enum value in database"),
                 priority: row.get(7)?,
-                issue_type: row.get::<_, String>(8)?.parse().unwrap(),
+                issue_type: row.get::<_, String>(8)?.parse().expect("Invalid enum value in database"),
                 assignee: row.get::<_, Option<String>>(9)?.unwrap_or_default(),
                 estimated_minutes: row.get(10)?,
                 created_at: row.get(11)?,
@@ -875,7 +875,7 @@ impl SqliteStorage {
                     self.dfs_cycle(neighbor, graph, visited, rec_stack, path, cycles)?;
                 } else if rec_stack.contains(neighbor) {
                     // Cycle detected
-                    let cycle_start = path.iter().position(|n| n == neighbor).unwrap();
+                    let cycle_start = path.iter().position(|n| n == neighbor).expect("Cycle node must be in path");
                     let cycle_ids: Vec<String> = path[cycle_start..].to_vec();
                     let mut cycle_issues = Vec::new();
                     for id in cycle_ids {

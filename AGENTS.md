@@ -1,6 +1,6 @@
-# Using Trace with Claude Code
+# Tracer for AI Agents
 
-This document guides AI agents (like Claude Code) on how to use Trace effectively.
+This document guides AI agents (Claude, GPT, Cursor, etc.) on how to use Tracer effectively.
 
 ## Quick Start
 

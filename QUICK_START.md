@@ -62,7 +62,7 @@ I'll run:
 tracer create "Fix authentication bug" -t bug -p 0
 ```
 
-See [CLAUDE.md](CLAUDE.md) for full integration details.
+See [AGENTS.md](AGENTS.md) for full integration details.
 
 ## Quick Reference
 
@@ -138,7 +138,7 @@ tracer export -o backup-$(date +%Y%m%d).jsonl
 ## Next Steps
 
 - Read [README.md](README.md) for full documentation
-- See [CLAUDE.md](CLAUDE.md) for AI agent integration
+- See [AGENTS.md](AGENTS.md) for AI agent integration
 - Check [CONTRIBUTING.md](CONTRIBUTING.md) to contribute
 
 Happy tracking! 🚀

@@ -1,10 +1,9 @@
 use anyhow::{Context, Result};
 use chrono::Utc;
 use clap::Args;
-use std::path::Path;
+use std::path::PathBuf;
 use tracer::storage::Storage;
 use tracer::types::*;
-use std::path::PathBuf;
 
 #[derive(Args)]
 pub struct CreateArgs {
@@ -46,14 +45,14 @@ pub struct CreateArgs {
 }
 
 pub fn execute(args: CreateArgs, storage: &mut Box<dyn Storage>, actor: &str, prefix: &str, json: bool) -> Result<()> {
-    if let Some(file_path) = args.file {
-        // Create issues from markdown file
-        create_from_file(&file_path, storage, actor, prefix, json)?;
-    } else {
-        // Create single issue
-        let title = args.title.clone().context("Title is required (or use --file)")?;
-        create_single(args, &title, storage, actor, prefix, json)?;
+    // File import not yet supported
+    if args.file.is_some() {
+        anyhow::bail!("Creating from markdown files is not yet implemented");
     }
+    
+    // Create single issue
+    let title = args.title.clone().context("Title is required")?;
+    create_single(args, &title, storage, actor, prefix, json)?;
     
     Ok(())
 }
@@ -121,10 +120,5 @@ fn create_single(args: CreateArgs, title: &str, storage: &mut Box<dyn Storage>, 
     }
 
     Ok(())
-}
-
-fn create_from_file(_file_path: &Path, _storage: &mut Box<dyn Storage>, _actor: &str, _prefix: &str, _json: bool) -> Result<()> {
-    // TODO: Implement markdown file parsing
-    anyhow::bail!("Creating from markdown files is not yet implemented");
 }
 

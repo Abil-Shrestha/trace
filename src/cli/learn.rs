@@ -97,7 +97,7 @@ pub fn execute(_args: LearnArgs) -> Result<()> {
     println!();
     println!("  • Full documentation: {}", "README.md".cyan());
     println!("  • Quick reference: {}", "QUICK_START.md".cyan());
-    println!("  • AI integration guide: {}", "CLAUDE.md".cyan());
+    println!("  • AI integration guide: {}", "AGENTS.md".cyan());
     println!("  • All commands: {}", "tracer --help".yellow());
     println!();
 
