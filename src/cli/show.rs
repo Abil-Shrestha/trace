@@ -1,6 +1,6 @@
 use anyhow::{Context, Result};
 use clap::Args;
-use trace::storage::Storage;
+use tracer::storage::Storage;
 
 #[derive(Args)]
 pub struct ShowArgs {
@@ -19,7 +19,7 @@ pub fn execute(args: ShowArgs, storage: &dyn Storage, json: bool) -> Result<()> 
     if json {
         println!("{}", serde_json::to_string_pretty(&issue)?);
     } else {
-        print!("{}", trace::utils::format_issue(&issue, true));
+        print!("{}", tracer::utils::format_issue(&issue, true));
 
         // Show labels
         let labels = storage.get_labels(&args.id)?;

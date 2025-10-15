@@ -1,6 +1,6 @@
 use anyhow::Result;
 use clap::Args;
-use trace::storage::Storage;
+use tracer::storage::Storage;
 
 #[derive(Args)]
 pub struct StatsArgs {}

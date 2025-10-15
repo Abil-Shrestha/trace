@@ -2,7 +2,7 @@ mod cli;
 
 use anyhow::Result;
 use clap::Parser;
-use trace::{find_database_path, find_jsonl_path, storage::sqlite::SqliteStorage};
+use tracer::{find_database_path, find_jsonl_path, storage::sqlite::SqliteStorage};
 
 fn main() -> Result<()> {
     let cli = cli::Cli::parse();
@@ -20,13 +20,13 @@ fn main() -> Result<()> {
     };
 
     // Open storage
-    let mut storage: Box<dyn trace::Storage> = Box::new(SqliteStorage::new(&db_path)?);
+    let mut storage: Box<dyn tracer::Storage> = Box::new(SqliteStorage::new(&db_path)?);
 
     // Get actor name
     let actor = if let Some(actor) = cli.actor {
         actor
     } else {
-        trace::get_actor()
+        tracer::get_actor()
     };
 
     // Get prefix from config or default to "bd"

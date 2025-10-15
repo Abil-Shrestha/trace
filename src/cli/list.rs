@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::Args;
-use trace::storage::Storage;
-use trace::types::*;
+use tracer::storage::Storage;
+use tracer::types::*;
 
 #[derive(Args)]
 pub struct ListArgs {
@@ -52,7 +52,7 @@ pub fn execute(args: ListArgs, storage: &dyn Storage, json: bool) -> Result<()> 
 
         println!("Found {} issue(s):\n", issues.len());
         for issue in issues {
-            print!("{}", trace::utils::format_issue(&issue, false));
+            print!("{}", tracer::utils::format_issue(&issue, false));
             println!();
         }
     }

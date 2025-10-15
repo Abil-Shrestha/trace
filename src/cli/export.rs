@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use clap::Args;
-use trace::storage::Storage;
-use trace::types::*;
+use tracer::storage::Storage;
+use tracer::types::*;
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::{Path, PathBuf};
@@ -109,7 +109,7 @@ pub fn execute_import(args: ImportArgs, storage: &mut Box<dyn Storage>, actor: &
                 continue;
             }
             // Update existing issue
-            let updates = trace::storage::IssueUpdates {
+            let updates = tracer::storage::IssueUpdates {
                 title: Some(issue.title.clone()),
                 description: Some(issue.description.clone()),
                 design: Some(issue.design.clone()),
@@ -210,7 +210,7 @@ pub fn auto_import(storage: &mut Box<dyn Storage>, jsonl_path: &PathBuf, actor: 
 
     // Read JSONL and compute hash
     let jsonl_data = std::fs::read(jsonl_path)?;
-    let current_hash = trace::utils::compute_hash(&jsonl_data);
+    let current_hash = tracer::utils::compute_hash(&jsonl_data);
 
     // Check last import hash
     let last_hash = storage.get_metadata("last_import_hash")?;
@@ -236,7 +236,7 @@ pub fn auto_import(storage: &mut Box<dyn Storage>, jsonl_path: &PathBuf, actor: 
         let exists = storage.get_issue(&issue.id)?.is_some();
         
         if exists {
-            let updates = trace::storage::IssueUpdates {
+            let updates = tracer::storage::IssueUpdates {
                 title: Some(issue.title.clone()),
                 description: Some(issue.description.clone()),
                 design: Some(issue.design.clone()),

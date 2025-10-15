@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use clap::Args;
-use trace::storage::{IssueUpdates, Storage};
-use trace::types::*;
+use tracer::storage::{IssueUpdates, Storage};
+use tracer::types::*;
 
 #[derive(Args)]
 pub struct UpdateArgs {

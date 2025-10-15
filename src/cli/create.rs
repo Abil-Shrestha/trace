@@ -2,8 +2,8 @@ use anyhow::{Context, Result};
 use chrono::Utc;
 use clap::Args;
 use std::path::Path;
-use trace::storage::Storage;
-use trace::types::*;
+use tracer::storage::Storage;
+use tracer::types::*;
 use std::path::PathBuf;
 
 #[derive(Args)]
@@ -96,7 +96,7 @@ fn create_single(args: CreateArgs, title: &str, storage: &mut Box<dyn Storage>, 
 
     // Add dependencies
     for dep_spec in &args.deps {
-        let (dep_type, depends_on_id) = trace::utils::parse_dependency_spec(dep_spec)?;
+        let (dep_type, depends_on_id) = tracer::utils::parse_dependency_spec(dep_spec)?;
         let dep = Dependency {
             issue_id: id.clone(),
             depends_on_id,

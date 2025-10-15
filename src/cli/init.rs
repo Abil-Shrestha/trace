@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::Args;
 use std::path::PathBuf;
-use trace::Storage;
+use tracer::Storage;
 
 #[derive(Args)]
 pub struct InitArgs {
@@ -25,18 +25,18 @@ pub fn execute(args: InitArgs) -> Result<()> {
     };
 
     // Create the database (schema is auto-initialized)
-    let mut storage = trace::storage::sqlite::SqliteStorage::new(&db_path)?;
+    let mut storage = tracer::storage::sqlite::SqliteStorage::new(&db_path)?;
     
     // Set the prefix in config
     storage.set_config("prefix", &args.prefix)?;
 
-    println!("✓ Initialized trace database at {}", db_path.display());
+    println!("✓ Initialized tracer database at {}", db_path.display());
     println!("  Prefix: {}", args.prefix);
-    println!("  JSONL: {}", trace::utils::find_jsonl_path(&db_path).display());
+    println!("  JSONL: {}", tracer::utils::find_jsonl_path(&db_path).display());
     println!();
     println!("Next steps:");
-    println!("  1. Create your first issue: trace create \"My first task\"");
-    println!("  2. See ready work: trace ready");
+    println!("  1. Create your first issue: tracer create \"My first task\"");
+    println!("  2. See ready work: tracer ready");
     println!("  3. Add to git: git add .trace/issues.jsonl");
 
     Ok(())

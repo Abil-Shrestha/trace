@@ -1,8 +1,8 @@
 use anyhow::{Context, Result};
 use chrono::Utc;
 use clap::{Args, Subcommand};
-use trace::storage::Storage;
-use trace::types::*;
+use tracer::storage::Storage;
+use tracer::types::*;
 
 #[derive(Subcommand)]
 pub enum DepCommands {

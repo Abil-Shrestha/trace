@@ -1,18 +1,22 @@
 [package]
-name = "trace"
+name = "tracer"
 version = "0.1.0"
 edition = "2021"
-authors = ["Trace Contributors"]
+authors = ["Tracer Contributors"]
 description = "Lightweight issue tracker for AI agents"
 license = "MIT"
 repository = "https://github.com/Abil-Shrestha/trace"
 
 [[bin]]
-name = "trace"
+name = "tracer"
+path = "src/main.rs"
+
+[[bin]]
+name = "tr"
 path = "src/main.rs"
 
 [lib]
-name = "trace"
+name = "tracer"
 path = "src/lib.rs"
 
 [dependencies]

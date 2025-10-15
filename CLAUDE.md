@@ -6,13 +6,13 @@ This document guides AI agents (like Claude Code) on how to use Trace effectivel
 
 ```bash
 # Initialize trace in your project
-trace init
+tracer init
 
 # Create your first issue
-trace create "Implement user authentication" -p 1 -t feature
+tracer create "Implement user authentication" -p 1 -t feature
 
 # See what's ready to work on
-trace ready --json
+tracer ready --json
 ```
 
 ## Core Workflow for AI Agents
@@ -23,23 +23,23 @@ At the start of any session, check for ready work:
 
 ```bash
 # Get unblocked work in JSON format
-trace ready --json
+tracer ready --json
 
 # Filter by priority
-trace ready --priority 1 --json
+tracer ready --priority 1 --json
 
 # Limit results
-trace ready --limit 5 --json
+tracer ready --limit 5 --json
 ```
 
 ### 2. Claim and Start Work
 
 ```bash
 # Update issue to in_progress
-trace update <issue-id> --status in_progress --json
+tracer update <issue-id> --status in_progress --json
 
 # Example:
-trace update bd-1 --status in_progress
+tracer update bd-1 --status in_progress
 ```
 
 ### 3. Create Issues During Work
@@ -48,10 +48,10 @@ As you discover new work, file it immediately:
 
 ```bash
 # Create a bug you found
-trace create "Fix edge case in validation" -t bug -p 0 --json
+tracer create "Fix edge case in validation" -t bug -p 0 --json
 
 # Link it back to parent work with discovered-from
-trace dep add <new-issue-id> <parent-issue-id> --type discovered-from
+tracer dep add <new-issue-id> <parent-issue-id> --type discovered-from
 ```
 
 ### 4. Add Dependencies
@@ -60,33 +60,33 @@ When you realize work blocks other work:
 
 ```bash
 # bd-2 is blocked by bd-1
-trace dep add bd-2 bd-1 --type blocks
+tracer dep add bd-2 bd-1 --type blocks
 
 # For parent-child relationships (epics)
-trace dep add bd-3 bd-1 --type parent-child
+tracer dep add bd-3 bd-1 --type parent-child
 ```
 
 ### 5. Complete Work
 
 ```bash
 # Close the issue
-trace close <issue-id> --reason "Implemented and tested"
+tracer close <issue-id> --reason "Implemented and tested"
 
 # Example with multiple issues
-trace close bd-1 bd-2 bd-3 --reason "All completed"
+tracer close bd-1 bd-2 bd-3 --reason "All completed"
 ```
 
 ### 6. Check Status
 
 ```bash
 # View issue details
-trace show <issue-id> --json
+tracer show <issue-id> --json
 
 # See overall statistics
-trace stats --json
+tracer stats --json
 
 # Check what's blocked
-trace blocked --json
+tracer blocked --json
 ```
 
 ## JSON Output Format
@@ -144,7 +144,7 @@ Don't let discovered work get lost:
 ```bash
 # Discovered a bug while working on bd-5
 NEW_ID=$(trace create "Fix null pointer in parser" -t bug -p 0 --json | jq -r '.id')
-trace dep add $NEW_ID bd-5 --type discovered-from
+tracer dep add $NEW_ID bd-5 --type discovered-from
 ```
 
 ### 3. Use Appropriate Dependency Types
@@ -160,16 +160,16 @@ Keep the tracker in sync with reality:
 
 ```bash
 # Starting work
-trace update bd-1 --status in_progress
+tracer update bd-1 --status in_progress
 
 # Hit a blocker
-trace update bd-1 --status blocked
+tracer update bd-1 --status blocked
 
 # Back to work
-trace update bd-1 --status in_progress
+tracer update bd-1 --status in_progress
 
 # Done
-trace close bd-1 --reason "Completed successfully"
+tracer close bd-1 --reason "Completed successfully"
 ```
 
 ### 5. Create Epics for Large Features
@@ -182,15 +182,15 @@ EPIC=$(trace create "User authentication system" -t epic -p 0 --json | jq -r '.i
 
 # Create child tasks
 T1=$(trace create "Design auth schema" -t task -p 1 --json | jq -r '.id')
-trace dep add $T1 $EPIC --type parent-child
+tracer dep add $T1 $EPIC --type parent-child
 
 T2=$(trace create "Implement login endpoint" -t task -p 1 --json | jq -r '.id')
-trace dep add $T2 $EPIC --type parent-child
-trace dep add $T2 $T1 --type blocks  # T2 blocked by T1
+tracer dep add $T2 $EPIC --type parent-child
+tracer dep add $T2 $T1 --type blocks  # T2 blocked by T1
 
 T3=$(trace create "Add session management" -t task -p 1 --json | jq -r '.id')
-trace dep add $T3 $EPIC --type parent-child
-trace dep add $T3 $T1 --type blocks  # T3 blocked by T1
+tracer dep add $T3 $EPIC --type parent-child
+tracer dep add $T3 $T1 --type blocks  # T3 blocked by T1
 ```
 
 ## Advanced Usage
@@ -199,36 +199,36 @@ trace dep add $T3 $T1 --type blocks  # T3 blocked by T1
 
 ```bash
 # List all open bugs
-trace list --status open --type bug --json
+tracer list --status open --type bug --json
 
 # Find issues by priority
-trace list --priority 0 --json
+tracer list --priority 0 --json
 
 # Search by assignee
-trace list --assignee "agent-1" --json
+tracer list --assignee "agent-1" --json
 ```
 
 ### Dependency Management
 
 ```bash
 # View dependency tree
-trace dep tree bd-1 --max-depth 10
+tracer dep tree bd-1 --max-depth 10
 
 # Detect cycles (issues blocking each other)
-trace dep cycles
+tracer dep cycles
 
 # Remove a dependency
-trace dep remove bd-2 bd-1
+tracer dep remove bd-2 bd-1
 ```
 
 ### Batch Operations
 
 ```bash
 # Close multiple issues
-trace close bd-1 bd-2 bd-3 --reason "Sprint complete"
+tracer close bd-1 bd-2 bd-3 --reason "Sprint complete"
 
 # Create issues with dependencies inline
-trace create "Task B" -p 1 --deps "blocks:bd-1"
+tracer create "Task B" -p 1 --deps "blocks:bd-1"
 ```
 
 ## Integration Example
@@ -253,7 +253,7 @@ ISSUE_TITLE=$(echo $WORK | jq -r '.[0].title')
 echo "Working on: $ISSUE_ID - $ISSUE_TITLE"
 
 # 3. Claim the work
-trace update $ISSUE_ID --status in_progress
+tracer update $ISSUE_ID --status in_progress
 
 # 4. Do the work...
 # (your implementation here)
@@ -265,10 +265,10 @@ if [ "$FOUND_BUG" = "true" ]; then
 fi
 
 # 6. Complete the work
-trace close $ISSUE_ID --reason "Implemented and tested"
+tracer close $ISSUE_ID --reason "Implemented and tested"
 
 # 7. Show stats
-trace stats
+tracer stats
 ```
 
 ## Why Use Trace?
@@ -304,23 +304,23 @@ Stop using markdown TODOs:
 
 ```bash
 # Ensure trace is initialized
-trace init
+tracer init
 
 # Or specify database path
-trace --db .trace/myapp.db ready
+tracer --db .trace/myapp.db ready
 ```
 
 ### No Ready Work
 
 ```bash
 # Check what's blocked
-trace blocked
+tracer blocked
 
 # View dependency tree to find blockers
-trace dep tree <issue-id>
+tracer dep tree <issue-id>
 
 # Remove incorrect dependencies if needed
-trace dep remove <from-id> <to-id>
+tracer dep remove <from-id> <to-id>
 ```
 
 ### Git Conflicts
@@ -337,10 +337,10 @@ If `.trace/issues.jsonl` has conflicts after git pull:
 ```bash
 # Via environment variable
 export TRACE_ACTOR="agent-name"
-trace create "Task"
+tracer create "Task"
 
 # Or via flag
-trace --actor "agent-name" create "Task"
+tracer --actor "agent-name" create "Task"
 ```
 
 ### Custom Database Location
@@ -348,10 +348,10 @@ trace --actor "agent-name" create "Task"
 ```bash
 # Via environment variable
 export TRACE_DB=/path/to/custom.db
-trace ready
+tracer ready
 
 # Or via flag
-trace --db /path/to/custom.db ready
+tracer --db /path/to/custom.db ready
 ```
 
 ## Tips for Claude Code

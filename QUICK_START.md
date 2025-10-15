@@ -9,8 +9,8 @@ cargo install --path .
 
 Verify installation:
 ```bash
-trace --version
-trace --help
+tracer --version
+tracer --help
 ```
 
 ## Your First Session
@@ -20,28 +20,28 @@ trace --help
 cd ~/myproject
 
 # 2. Initialize trace
-trace init
+tracer init
 
 # 3. Create some issues
-trace create "Implement user authentication" -t epic -p 0
-trace create "Add login form" -t task -p 1
-trace create "Add logout button" -t task -p 1
+tracer create "Implement user authentication" -t epic -p 0
+tracer create "Add login form" -t task -p 1
+tracer create "Add logout button" -t task -p 1
 
 # 4. Add dependencies
-trace dep add test-2 test-1 --type parent-child
-trace dep add test-3 test-1 --type parent-child
+tracer dep add test-2 test-1 --type parent-child
+tracer dep add test-3 test-1 --type parent-child
 
 # 5. See what's ready
-trace ready
+tracer ready
 
 # 6. Start working
-trace update test-2 --status in_progress
+tracer update test-2 --status in_progress
 
 # 7. Complete work
-trace close test-2 --reason "Implemented and tested"
+tracer close test-2 --reason "Implemented and tested"
 
 # 8. Check stats
-trace stats
+tracer stats
 ```
 
 ## Using with Claude Code
@@ -52,14 +52,14 @@ Just tell me (Claude) to use `trace` for tracking work! For example:
 
 I'll automatically run:
 ```bash
-trace ready --json
+tracer ready --json
 ```
 
 > "Create an issue for fixing the authentication bug"
 
 I'll run:
 ```bash
-trace create "Fix authentication bug" -t bug -p 0
+tracer create "Fix authentication bug" -t bug -p 0
 ```
 
 See [CLAUDE.md](CLAUDE.md) for full integration details.
@@ -68,30 +68,30 @@ See [CLAUDE.md](CLAUDE.md) for full integration details.
 
 ```bash
 # Create
-trace create "Title" [-p priority] [-t type]
+tracer create "Title" [-p priority] [-t type]
 
 # List & Show
-trace list [--status open] [--priority 1]
-trace show <id>
+tracer list [--status open] [--priority 1]
+tracer show <id>
 
 # Update
-trace update <id> --status in_progress
-trace close <id> --reason "Done"
+tracer update <id> --status in_progress
+tracer close <id> --reason "Done"
 
 # Dependencies
-trace dep add <from> <to> [-t type]
-trace dep tree <id>
+tracer dep add <from> <to> [-t type]
+tracer dep tree <id>
 
 # Ready Work
-trace ready [--limit 5]
-trace blocked
+tracer ready [--limit 5]
+tracer blocked
 
 # Export/Import
-trace export [-o file.jsonl]
-trace import [-i file.jsonl]
+tracer export [-o file.jsonl]
+tracer import [-i file.jsonl]
 
 # Stats
-trace stats
+tracer stats
 ```
 
 ## JSON Output
@@ -99,9 +99,9 @@ trace stats
 Add `--json` to any command for programmatic parsing:
 
 ```bash
-trace ready --json | jq '.[0]'
-trace list --json | jq 'length'
-trace stats --json
+tracer ready --json | jq '.[0]'
+tracer list --json | jq 'length'
+tracer stats --json
 ```
 
 ## Tips
@@ -117,22 +117,22 @@ trace stats --json
 ### Create Epic with Subtasks
 ```bash
 EPIC=$(trace create "New Feature" -t epic -p 0 --json | jq -r '.id')
-trace create "Subtask 1" -t task -p 1 --deps "parent-child:$EPIC"
-trace create "Subtask 2" -t task -p 1 --deps "parent-child:$EPIC"
+tracer create "Subtask 1" -t task -p 1 --deps "parent-child:$EPIC"
+tracer create "Subtask 2" -t task -p 1 --deps "parent-child:$EPIC"
 ```
 
 ### Find and Work on Highest Priority
 ```bash
 WORK=$(trace ready --limit 1 --json)
 ID=$(echo $WORK | jq -r '.[0].id')
-trace update $ID --status in_progress
+tracer update $ID --status in_progress
 # ... do work ...
-trace close $ID --reason "Completed"
+tracer close $ID --reason "Completed"
 ```
 
 ### Export for Backup
 ```bash
-trace export -o backup-$(date +%Y%m%d).jsonl
+tracer export -o backup-$(date +%Y%m%d).jsonl
 ```
 
 ## Next Steps

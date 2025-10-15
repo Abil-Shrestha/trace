@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::Args;
-use trace::storage::Storage;
-use trace::types::*;
+use tracer::storage::Storage;
+use tracer::types::*;
 
 #[derive(Args)]
 pub struct ReadyArgs {
@@ -42,7 +42,7 @@ pub fn execute_ready(args: ReadyArgs, storage: &dyn Storage, json: bool) -> Resu
         use colored::Colorize;
         println!("{} Ready work: {} issue(s)\n", "✓".green(), issues.len());
         for issue in issues {
-            print!("{}", trace::utils::format_issue(&issue, false));
+            print!("{}", tracer::utils::format_issue(&issue, false));
             println!();
         }
     }
@@ -64,7 +64,7 @@ pub fn execute_blocked(_args: BlockedArgs, storage: &dyn Storage, json: bool) ->
         use colored::Colorize;
         println!("{} Blocked: {} issue(s)\n", "⚠".yellow(), blocked.len());
         for bi in blocked {
-            print!("{}", trace::utils::format_issue(&bi.issue, false));
+            print!("{}", tracer::utils::format_issue(&bi.issue, false));
             println!("  {} Blocked by: {}", "⚠".red(), bi.blocked_by.join(", "));
             println!();
         }
