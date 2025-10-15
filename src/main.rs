@@ -12,6 +12,11 @@ fn main() -> Result<()> {
         return cli::init::execute(args);
     }
 
+    // Handle learn command (doesn't need database)
+    if let cli::Commands::Learn(args) = cli.command {
+        return cli::learn::execute(args);
+    }
+
     // Find database path
     let db_path = if let Some(path) = cli.db {
         path
@@ -45,6 +50,7 @@ fn main() -> Result<()> {
     // Execute command
     let result = match cli.command {
         cli::Commands::Init(_) => unreachable!(), // Handled above
+        cli::Commands::Learn(_) => unreachable!(), // Handled above
         
         cli::Commands::Create(args) => {
             cli::create::execute(args, &mut storage, &actor, &prefix, cli.json)

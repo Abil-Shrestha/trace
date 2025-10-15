@@ -1,12 +1,13 @@
 pub mod create;
-pub mod list;
-pub mod show;
-pub mod update;
-pub mod ready;
 pub mod dep;
 pub mod export;
 pub mod init;
+pub mod learn;
+pub mod list;
+pub mod ready;
+pub mod show;
 pub mod stats;
+pub mod update;
 
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
@@ -36,6 +37,9 @@ pub struct Cli {
 pub enum Commands {
     /// Initialize a new trace database
     Init(init::InitArgs),
+    
+    /// Learn how to use tracer for AI agents
+    Learn(learn::LearnArgs),
     
     /// Create a new issue
     Create(create::CreateArgs),
