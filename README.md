@@ -2,8 +2,6 @@
 
 > **Blazing-fast issue tracker for AI agents**
 
-![Tracer Demo](src/assets/tracer.gif)
-
 A lightweight, dependency-aware issue tracker designed for AI coding agents. Track work, manage dependencies, and discover ready tasks—all from the CLI.
 
 [![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
