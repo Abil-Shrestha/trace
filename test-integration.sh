@@ -1,9 +1,9 @@
 #!/bin/bash
-# Test script for validating Trace with Claude Code workflows
+# Test script for validating Tracer with AI agents
 
 set -e
 
-echo "🧪 Testing Trace Integration for Claude Code"
+echo "🧪 Testing Tracer Integration"
 echo "=============================================="
 echo ""
 
@@ -12,7 +12,7 @@ rm -rf .trace-test
 mkdir -p .trace-test
 cd .trace-test
 
-TRACE="../target/release/trace"
+TRACE="../target/release/tracer"
 
 # Test 1: Initialize
 echo "✓ Test 1: Initialize database"

@@ -1,6 +1,7 @@
 use anyhow::{Context, Result};
 use clap::Args;
 use tracer::storage::Storage;
+use chrono::{DateTime, Utc};
 
 #[derive(Args)]
 pub struct ShowArgs {
@@ -36,9 +37,27 @@ pub fn execute(args: ShowArgs, storage: &dyn Storage, json: bool) -> Result<()> 
             }
         }
 
-        // Show events if --full
+        // Show recent comments (always visible, not just with --full)
+        let events = storage.get_events(&args.id, 20)?;
+        let comments: Vec<_> = events.iter()
+            .filter(|e| e.event_type == tracer::types::EventType::Commented)
+            .collect();
+        
+        if !comments.is_empty() {
+            use colored::Colorize;
+            println!("\n  Recent comments:");
+            for event in comments.iter().take(5) {
+                let time_ago = format_time_ago(&event.created_at);
+                println!("    {} {}: \"{}\"", 
+                    event.actor.cyan(),
+                    format!("({})", time_ago).dimmed(),
+                    event.comment.as_ref().unwrap_or(&String::new())
+                );
+            }
+        }
+
+        // Show all events if --full
         if args.full {
-            let events = storage.get_events(&args.id, 20)?;
             if !events.is_empty() {
                 println!("\n  Recent Events:");
                 for event in events {
@@ -56,5 +75,20 @@ pub fn execute(args: ShowArgs, storage: &dyn Storage, json: bool) -> Result<()> 
     }
 
     Ok(())
+}
+
+fn format_time_ago(dt: &DateTime<Utc>) -> String {
+    let now = Utc::now();
+    let duration = now.signed_duration_since(*dt);
+    
+    if duration.num_days() > 0 {
+        format!("{} days ago", duration.num_days())
+    } else if duration.num_hours() > 0 {
+        format!("{} hours ago", duration.num_hours())
+    } else if duration.num_minutes() > 0 {
+        format!("{} min ago", duration.num_minutes())
+    } else {
+        "just now".to_string()
+    }
 }
 

@@ -6,8 +6,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/trace.git
-cd trace
+git clone https://github.com/Abil-Shrestha/tracer.git
+cd tracer
 
 # Build and install
 cargo install --path .
@@ -27,8 +27,8 @@ cargo install trace-tracker
 
 **Option 1: Homebrew (Coming Soon)**
 ```bash
-brew tap yourusername/trace
-brew install trace
+brew tap Abil-Shrestha/tracer
+brew install tracer
 ```
 
 **Option 2: From Source**
@@ -36,8 +36,8 @@ brew install trace
 # Install Rust if not already installed
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-# Install trace
-cargo install --git https://github.com/yourusername/trace
+# Install tracer
+cargo install --git https://github.com/Abil-Shrestha/tracer
 ```
 
 ### Linux
@@ -51,8 +51,8 @@ sudo apt install build-essential pkg-config libssl-dev
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-# Install trace
-cargo install --git https://github.com/yourusername/trace
+# Install tracer
+cargo install --git https://github.com/Abil-Shrestha/tracer
 ```
 
 **Arch Linux (Coming Soon):**
@@ -63,13 +63,13 @@ yay -S trace-git
 **From Binary:**
 ```bash
 # Download from releases
-wget https://github.com/yourusername/trace/releases/latest/download/trace-linux-amd64
+wget https://github.com/Abil-Shrestha/tracer/releases/latest/download/tracer-linux-amd64
 
 # Make executable
-chmod +x trace-linux-amd64
+chmod +x tracer-linux-amd64
 
 # Move to PATH
-sudo mv trace-linux-amd64 /usr/local/bin/trace
+sudo mv tracer-linux-amd64 /usr/local/bin/tracer
 ```
 
 ### Windows
@@ -78,17 +78,17 @@ sudo mv trace-linux-amd64 /usr/local/bin/trace
 ```powershell
 # Install Rust from https://rustup.rs/
 
-# Install trace
-cargo install --git https://github.com/yourusername/trace
+# Install tracer
+cargo install --git https://github.com/Abil-Shrestha/tracer
 ```
 
 **Option 2: From Binary**
 ```powershell
 # Download from releases
-# https://github.com/yourusername/trace/releases/latest
+# https://github.com/Abil-Shrestha/tracer/releases/latest
 
 # Add to PATH or run from download location
-.\trace.exe --help
+.\tracer.exe --help
 ```
 
 ## Verification
@@ -96,8 +96,8 @@ cargo install --git https://github.com/yourusername/trace
 After installation, verify it works:
 
 ```bash
-trace --version
-trace --help
+tracer --version
+tracer --help
 ```
 
 ## Updating
@@ -109,20 +109,20 @@ cargo install trace-tracker --force
 
 ### From Source
 ```bash
-cd trace
+cd tracer
 git pull
 cargo install --path . --force
 ```
 
 ### Homebrew
 ```bash
-brew upgrade trace
+brew upgrade tracer
 ```
 
 ## Uninstalling
 
 ```bash
-cargo uninstall trace
+cargo uninstall tracer
 ```
 
 ## Troubleshooting
@@ -158,8 +158,8 @@ For contributing or testing:
 
 ```bash
 # Clone repo
-git clone https://github.com/yourusername/trace.git
-cd trace
+git clone https://github.com/Abil-Shrestha/tracer.git
+cd tracer
 
 # Build in debug mode
 cargo build
@@ -173,20 +173,20 @@ cargo run -- --help
 # Build optimized version
 cargo build --release
 
-# Binary will be in target/release/trace
+# Binary will be in target/release/tracer
 ```
 
 ## Next Steps
 
 After installation:
 
-1. Initialize in your project: `trace init`
-2. Create your first issue: `trace create "My first task"`
-3. See ready work: `trace ready`
+1. Initialize in your project: `tracer init`
+2. Create your first issue: `tracer create "My first task"`
+3. See ready work: `tracer ready`
 4. Read the [README](README.md) for full documentation
 
 ## Getting Help
 
 - Check the [FAQ](README.md#faq) in the README
-- [Open an issue](https://github.com/yourusername/trace/issues) on GitHub
+- [Open an issue](https://github.com/Abil-Shrestha/tracer/issues) on GitHub
 - Read [CONTRIBUTING.md](CONTRIBUTING.md) for development help

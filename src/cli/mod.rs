@@ -74,5 +74,8 @@ pub enum Commands {
     
     /// Show statistics
     Stats(stats::StatsArgs),
+    
+    /// Add a comment to an issue
+    Comment(update::CommentArgs),
 }
 

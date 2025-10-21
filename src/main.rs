@@ -68,6 +68,10 @@ fn main() -> Result<()> {
             cli::update::execute_close(args, &mut storage, &actor, cli.json)
         }
         
+        cli::Commands::Comment(args) => {
+            cli::update::execute_comment(args, &mut storage, &actor, cli.json)
+        }
+        
         cli::Commands::Ready(args) => {
             cli::ready::execute_ready(args, storage.as_ref(), cli.json)
         }

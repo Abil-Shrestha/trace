@@ -1,9 +1,9 @@
 [package]
 name = "tracer"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Tracer Contributors"]
-description = "Lightweight issue tracker for AI agents"
+description = "Lightweight issue tracker for AI agents with multi-agent coordination"
 license = "MIT"
 repository = "https://github.com/Abil-Shrestha/tracer"
 

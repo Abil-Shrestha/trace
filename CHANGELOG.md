@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-10-21
+
+### Added
+
+- **Multi-Agent Coordination** - Simple coordination for multiple AI agents working on the same project
+  - `tracer comment` command for agents to communicate on issues
+  - Auto-assign feature: agents are automatically assigned when they set status to `in_progress`
+  - Comments displayed in `tracer show` with timestamps and agent names
+  - Assignee visibility in all issue listings (`list`, `ready`, `show`)
+  - Actor identification via `--actor` flag, `$TRACE_ACTOR`, or `$USER` environment variable
+
+### Changed
+
+- Enhanced `tracer show` to display recent comments by default (up to 5 most recent)
+- Improved time display with relative timestamps (e.g., "5 min ago", "2 hours ago")
+- Updated issue display format to prominently show assignee information
+
+### Documentation
+
+- Added MULTI_AGENT.md with usage examples and workflow guidance
+- Updated README with multi-agent features section
+
 ## [0.1.0] - 2025-10-15
 
 ### Added
@@ -51,5 +73,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ready work query: ~10ms
 - Dependency tree: ~25ms
 
-[Unreleased]: https://github.com/Abil-Shrestha/tracer/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Abil-Shrestha/tracer/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Abil-Shrestha/tracer/releases/tag/v0.2.0
 [0.1.0]: https://github.com/Abil-Shrestha/tracer/releases/tag/v0.1.0

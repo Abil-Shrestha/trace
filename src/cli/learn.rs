@@ -62,28 +62,42 @@ pub fn execute(_args: LearnArgs) -> Result<()> {
     println!("     {}", "tracer close $ID --reason \"Done\"".yellow());
     println!();
 
-    // Section 4: Useful Commands
+    // Section 4: Multi-Agent Coordination
+    println!("{}", "👥 MULTI-AGENT COORDINATION".green().bold());
+    println!();
+    println!("  {} Leave comments on issues", "Communicate:".cyan().bold());
+    println!("     {}", "tracer comment test-1 \"Working on auth API\"".yellow());
+    println!();
+    println!("  {} Set your actor name", "Identify:".cyan().bold());
+    println!("     {}", "tracer --actor agent-1 update test-1 --status in_progress".yellow());
+    println!("     → Auto-assigns you to the issue");
+    println!();
+    println!("  {} See who's working on what", "Visibility:".cyan().bold());
+    println!("     {}", "tracer show test-1".yellow());
+    println!("     → Shows assignee and recent comments");
+    println!();
+
+    // Section 5: Useful Commands
     println!("{}", "⚡ ESSENTIAL COMMANDS".green().bold());
     println!();
     println!("  {:<25} {}", "tracer ready".yellow(), "Find ready work");
     println!("  {:<25} {}", "tracer list".yellow(), "List all issues");
     println!("  {:<25} {}", "tracer show <id>".yellow(), "Show issue details");
+    println!("  {:<25} {}", "tracer comment <id>".yellow(), "Leave a comment");
     println!("  {:<25} {}", "tracer dep tree <id>".yellow(), "View dependencies");
     println!("  {:<25} {}", "tracer stats".yellow(), "See statistics");
-    println!("  {:<25} {}", "tracer export".yellow(), "Export to JSONL");
     println!();
 
-    // Section 5: Tips
+    // Section 6: Tips
     println!("{}", "💡 PRO TIPS".green().bold());
     println!();
-    println!("  • Use {} for short commands", "tr".yellow().bold());
     println!("  • Add {} to any command for programmatic parsing", "--json".yellow());
     println!("  • Commit {} to git for version control", ".trace/issues.jsonl".cyan());
     println!("  • Use {} to find bottlenecks", "tracer blocked".yellow());
-    println!("  • Link discovered work with {} dependency type", "discovered-from".cyan());
+    println!("  • Set {} env var to auto-identify", "TRACE_ACTOR".cyan());
     println!();
 
-    // Section 6: Dependency Types
+    // Section 7: Dependency Types
     println!("{}", "📎 DEPENDENCY TYPES".green().bold());
     println!();
     println!("  {:<20} {}", "blocks".yellow(), "Hard blocker (affects ready work)");
@@ -92,11 +106,11 @@ pub fn execute(_args: LearnArgs) -> Result<()> {
     println!("  {:<20} {}", "related".yellow(), "Soft connection");
     println!();
 
-    // Section 7: Resources
+    // Section 8: Resources
     println!("{}", "📖 LEARN MORE".green().bold());
     println!();
     println!("  • Full documentation: {}", "README.md".cyan());
-    println!("  • Quick reference: {}", "QUICK_START.md".cyan());
+    println!("  • Multi-agent guide: {}", "MULTI_AGENT.md".cyan());
     println!("  • AI integration guide: {}", "AGENTS.md".cyan());
     println!("  • All commands: {}", "tracer --help".yellow());
     println!();

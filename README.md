@@ -1,178 +1,80 @@
-# Tracer ⚡
+# Tracer
 
-> **Blazing-fast issue tracker for AI agents**
+Lightweight issue tracker for AI agents. Tracks dependencies between tasks and coordinates multiple agents working on the same project.
 
-A lightweight, dependency-aware issue tracker designed for AI coding agents. Track work, manage dependencies, and discover ready tasks—all from the CLI.
+## What It Does
 
-[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+- Track tasks with dependencies (task B blocks task A)
+- Find work that's ready to start (no blockers)
+- Multiple agents can work together and leave comments
+- Git-based storage (JSONL files)
 
-## 🤔 What is Tracer?
-
-Imagine you're working on a project with multiple tasks, some blocking others. **Tracer helps you:**
-
-- 📝 **Track all your tasks** in one place (no more scattered TODOs)
-- 🔗 **Link dependencies** - "Task B can't start until Task A is done"
-- ✅ **See what's ready** - Instantly find work you can start right now
-- 🤖 **Perfect for AI agents** - They can track their own work across sessions
-- 📦 **Git-friendly** - Everything stored as simple JSON, syncs via git
-
-**Real Example:** You're building a login system. You need to design the database schema first, then implement the API, then build the UI. Tracer tracks these dependencies and always shows you what's actually ready to work on.
-
-## 🚀 Quick Install
+## Install
 
 ```bash
 cargo install --git https://github.com/Abil-Shrestha/tracer
 ```
 
-**Prerequisites:** [Rust toolchain](https://rustup.rs/) (installs in ~30 seconds)
+Requires Rust toolchain: https://rustup.rs/
 
-**💡 Tip:** Use `tr` as a shorthand - both `tracer` and `tr` work identically!
-
-## ⚡ Quick Start
+## Usage
 
 ```bash
-# Initialize in your project
-tracer init
-
-# Learn how to use it
-tracer learn  # Interactive tutorial showing all features
+tracer init                                    # Initialize in your project
+tracer create "Task name" -p 1 -t feature     # Create issue
+tracer ready                                   # See available work
+tracer update bd-1 --status in_progress       # Start work
+tracer comment bd-1 "Working on this"         # Leave comment
+tracer close bd-1                              # Close issue
 ```
 
-**For AI Agents:** See **[AGENTS.md](./AGENTS.md)** for integration guide and best practices.
-
-**For Humans:** Check out the **[Full documentation](./QUICK_START.md)** for detailed examples.
-
-## 🎯 Example Workflow (with Dependencies)
-
-Once you're comfortable with basics, try managing dependencies:
+## Multi-Agent Coordination
 
 ```bash
-# Create an epic (big feature)
-tracer create "User authentication system" -t epic
+# Agent 1 starts work
+tracer --actor agent-1 update bd-1 --status in_progress
+tracer comment bd-1 "Working on auth API"
 
-# Create subtasks
-tracer create "Design database schema" -t task
-tracer create "Build login API" -t task
-tracer create "Create login UI" -t task
+# Agent 2 sees it
+tracer show bd-1  # Shows assignee and comments
+tracer comment bd-1 "I'll test it when ready"
 
-# Link them: API depends on schema being done
-tracer dep add test-3 test-2 --type blocks
-
-# See what you can work on RIGHT NOW
-tracer ready
-# → Shows test-2 (Design database schema)
-# → Hides test-3 (blocked by test-2)
-
-# Start working on what's ready
-tracer update test-2 --status in_progress
+# Agent 1 finishes
+tracer close bd-1
 ```
 
-**The power:** Tracer automatically figures out what's ready to work on based on your dependencies!
+Auto-assigns agent when status changes to in_progress. Comments show up in `tracer show`.
 
-## Why Tracer?
+## Features
 
-- ⚡ **Fast** - ~5ms per operation, built in Rust
-- 🤖 **AI-friendly** - JSON output, CLI-first, programmatic workflows
-- 🔗 **Smart dependencies** - Track what blocks what, discover ready work
-- 📦 **Git-native** - JSONL storage, no server needed
-- 🌍 **Distributed** - Share work across agents via git
-- 💾 **Audit trail** - Every change logged with context
+- Dependency tracking (blocks, parent-child, related, discovered-from)
+- Multi-agent coordination via comments and auto-assign
+- JSON output for AI agents (`--json` flag)
+- Git-friendly storage (JSONL)
+- Auto-discovers database like git does
 
-## Key Features
-
-**Dependency Tracking**
-
-- Four types: `blocks`, `parent-child`, `discovered-from`, `related`
-- Automatic ready work detection (finds unblocked tasks)
-- Dependency trees and cycle detection
-
-**AI Agent Integration**
-
-- `--json` flag on all commands for programmatic parsing
-- Auto-export to JSONL after changes
-- Auto-import after git pull (hash-based)
-
-**Git-Based Storage**
-
-- One JSON line per issue = clean git diffs
-- Commit `.trace/issues.jsonl` to version control
-- Clone repo = clone full database
-
-**Multi-Project Support**
-
-- Auto-discovers database (like git)
-- Works from any subdirectory
-- Project-local isolation
-
-## Common Commands
+## Commands
 
 ```bash
-# Core operations
 tracer create "Title" [-p priority] [-t type]
-tracer list [--status open] [--priority 1]
+tracer list [--status STATUS]
 tracer show <id>
-tracer update <id> --status in_progress
-tracer close <id> --reason "Done"
-
-# Dependencies
-tracer dep add <from> <to> --type blocks
-tracer dep tree <id>
-
-# Find work
-tracer ready [--limit 5]
-tracer blocked
-
-# Data management
-tracer export [-o file.jsonl]
+tracer update <id> --status STATUS
+tracer close <id>
+tracer comment <id> "message"
+tracer dep add <from> <to> --type TYPE
+tracer ready
 tracer stats
 ```
 
-**💡 Tip:** Add `--json` to any command for programmatic parsing. Use `tr` instead of `tracer` for faster typing!
-
-## Performance
-
-Fast enough to never slow you down:
-
-| Operation        | Time  |
-| ---------------- | ----- |
-| Create issue     | ~5ms  |
-| List 1000 issues | ~15ms |
-| Ready work query | ~10ms |
-
-_Benchmarks on M1 MacBook Pro with 10,000 issues_
-
-## Installation (Alternative Methods)
-
-```bash
-# From source
-git clone https://github.com/Abil-Shrestha/tracer.git
-cd tracer
-cargo install --path .
-
-# Verify installation
-tracer --version
-tr --version  # Both commands work!
-
-# Using cargo (once published)
-cargo install tracer
-```
+Add `--json` to any command for JSON output.
 
 ## Documentation
 
-- **[Quick Start Guide](./QUICK_START.md)** - Get started in 5 minutes
-- **[AI Agent Guide](./AGENTS.md)** - Integration with Claude, GPT, and other LLMs
-- **[Contributing](./CONTRIBUTING.md)** - Help improve Tracer
-- **[Installation](./INSTALL.md)** - Detailed installation instructions
-
-## Contributing
-
-Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+- [AGENTS.md](./AGENTS.md) - AI agent integration guide
+- [MULTI_AGENT.md](./MULTI_AGENT.md) - Multi-agent coordination
+- [CHANGELOG.md](./CHANGELOG.md) - Version history
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-**[⭐ Star on GitHub](https://github.com/Abil-Shrestha/tracer)** • **[Report Issues](https://github.com/Abil-Shrestha/tracer/issues)** • Built with Rust 🦀
+MIT

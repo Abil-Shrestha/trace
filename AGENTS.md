@@ -5,7 +5,7 @@ This document guides AI agents (Claude, GPT, Cursor, etc.) on how to use Tracer 
 ## Quick Start
 
 ```bash
-# Initialize trace in your project
+# Initialize tracer in your project
 tracer init
 
 # Create your first issue
@@ -130,7 +130,7 @@ All commands support `--json` for programmatic parsing:
 Before starting any new work, check what's unblocked:
 
 ```bash
-WORK=$(trace ready --limit 1 --json)
+WORK=$(tracer ready --limit 1 --json)
 if [ "$(echo $WORK | jq length)" -gt 0 ]; then
   ISSUE_ID=$(echo $WORK | jq -r '.[0].id')
   echo "Working on: $ISSUE_ID"
@@ -143,7 +143,7 @@ Don't let discovered work get lost:
 
 ```bash
 # Discovered a bug while working on bd-5
-NEW_ID=$(trace create "Fix null pointer in parser" -t bug -p 0 --json | jq -r '.id')
+NEW_ID=$(tracer create "Fix null pointer in parser" -t bug -p 0 --json | jq -r '.id')
 tracer dep add $NEW_ID bd-5 --type discovered-from
 ```
 
@@ -178,17 +178,17 @@ Break down complex work:
 
 ```bash
 # Create epic
-EPIC=$(trace create "User authentication system" -t epic -p 0 --json | jq -r '.id')
+EPIC=$(tracer create "User authentication system" -t epic -p 0 --json | jq -r '.id')
 
 # Create child tasks
-T1=$(trace create "Design auth schema" -t task -p 1 --json | jq -r '.id')
+T1=$(tracer create "Design auth schema" -t task -p 1 --json | jq -r '.id')
 tracer dep add $T1 $EPIC --type parent-child
 
-T2=$(trace create "Implement login endpoint" -t task -p 1 --json | jq -r '.id')
+T2=$(tracer create "Implement login endpoint" -t task -p 1 --json | jq -r '.id')
 tracer dep add $T2 $EPIC --type parent-child
 tracer dep add $T2 $T1 --type blocks  # T2 blocked by T1
 
-T3=$(trace create "Add session management" -t task -p 1 --json | jq -r '.id')
+T3=$(tracer create "Add session management" -t task -p 1 --json | jq -r '.id')
 tracer dep add $T3 $EPIC --type parent-child
 tracer dep add $T3 $T1 --type blocks  # T3 blocked by T1
 ```
@@ -239,7 +239,7 @@ Complete agent workflow:
 #!/bin/bash
 
 # 1. Check for ready work
-WORK=$(trace ready --limit 1 --json)
+WORK=$(tracer ready --limit 1 --json)
 
 if [ "$(echo $WORK | jq length)" -eq 0 ]; then
   echo "No ready work found"
@@ -260,8 +260,8 @@ tracer update $ISSUE_ID --status in_progress
 
 # 5. Discover new work during execution
 if [ "$FOUND_BUG" = "true" ]; then
-  BUG_ID=$(trace create "Fix discovered issue" -t bug -p 0 --json | jq -r '.id')
-  trace dep add $BUG_ID $ISSUE_ID --type discovered-from
+  BUG_ID=$(tracer create "Fix discovered issue" -t bug -p 0 --json | jq -r '.id')
+  tracer dep add $BUG_ID $ISSUE_ID --type discovered-from
 fi
 
 # 6. Complete the work
@@ -303,7 +303,7 @@ Stop using markdown TODOs:
 ### Database Not Found
 
 ```bash
-# Ensure trace is initialized
+# Ensure tracer is initialized
 tracer init
 
 # Or specify database path
@@ -328,7 +328,7 @@ tracer dep remove <from-id> <to-id>
 If `.trace/issues.jsonl` has conflicts after git pull:
 
 1. Resolve the conflict (keep both changes usually)
-2. Import: `trace import -i .trace/issues.jsonl`
+2. Import: `tracer import -i .trace/issues.jsonl`
 
 ## Configuration
 
@@ -356,18 +356,18 @@ tracer --db /path/to/custom.db ready
 
 ## Tips for Claude Code
 
-1. **Start every session with `trace ready`** to orient yourself
+1. **Start every session with `tracer ready`** to orient yourself
 2. **File issues liberally** - better to have too many than lose work
-3. **Use JSON output** for parsing: `trace ready --json | jq`
+3. **Use JSON output** for parsing: `tracer ready --json | jq`
 4. **Update status** so humans can track your progress
 5. **Link discovered work** back to parents with `discovered-from`
-6. **Check `trace stats`** periodically to see the big picture
+6. **Check `tracer stats`** periodically to see the big picture
 
 ## Example Session
 
 ```bash
 # Session start - what's ready?
-$ trace ready --limit 3
+$ tracer ready --limit 3
 
 ✓ Ready work: 2 issue(s)
 
@@ -380,17 +380,17 @@ bd-8 Fix validation bug [P0, bug]
   Created: 2025-10-15 11:00 | Updated: 2025-10-15 11:00
 
 # Pick the highest priority
-$ trace update bd-8 --status in_progress
+$ tracer update bd-8 --status in_progress
 
 # Work on it, discover an issue
-$ trace create "Add tests for validation" -t task -p 1 --deps "discovered-from:bd-8"
+$ tracer create "Add tests for validation" -t task -p 1 --deps "discovered-from:bd-8"
 ✓ Created issue bd-12 Add tests for validation
 
 # Complete the work
-$ trace close bd-8 --reason "Fixed validation and added tests"
+$ tracer close bd-8 --reason "Fixed validation and added tests"
 
 # Check stats
-$ trace stats
+$ tracer stats
 
 Issue Statistics
 
